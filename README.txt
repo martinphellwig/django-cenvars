@@ -1,13 +1,13 @@
 .. |CODESHIP_ID| b5730f70-2400-0134-e4a5-76d3d72b136a
 .. |PROJECT_NAME| django-envar
-.. |REPO| hellwig/|PROJECT_NAME|
+.. |REPO| hellwig/django-envar
 
-.. image:: https://img.shields.io/codeship/|CODESHIP_ID|/default.svg
-   :target: https://bitbucket.org/|REPO|
-.. image:: https://coveralls.io/repos/bitbucket/|REPO|/badge.svg?branch=default 
-   :target: https://coveralls.io/bitbucket/|REPO|?branch=default
-.. image:: https://img.shields.io/pypi/v/|PROJECT_NAME|.svg
-   :target: https://pypi.python.org/pypi/|PROJECT_NAME|
+.. image:: https://img.shields.io/codeship/b5730f70-2400-0134-e4a5-76d3d72b136a/default.svg
+   :target: https://bitbucket.org/hellwig/django-envar
+.. image:: https://coveralls.io/repos/bitbucket/hellwig/django-envar/badge.svg?branch=default 
+   :target: https://coveralls.io/bitbucket/hellwig/django-envar?branch=default
+.. image:: https://img.shields.io/pypi/v/django-envar.svg
+   :target: https://pypi.python.org/pypi/django-envar
 .. image:: https://img.shields.io/badge/Donate-PayPal-blue.svg
    :target: https://paypal.me/MartinHellwig
 .. image:: https://img.shields.io/badge/Donate-Patreon-orange.svg
