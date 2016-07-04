@@ -1,3 +1,6 @@
+.. |CODESHIP_ID| b5730f70-2400-0134-e4a5-76d3d72b136a
+.. |PROJECT_NAME| django-envar
+.. |REPO| hellwig/|PROJECT_NAME|
 
 .. image:: https://img.shields.io/codeship/|CODESHIP_ID|/default.svg
    :target: https://bitbucket.org/|REPO|
@@ -70,8 +73,3 @@ https://www.patreon.com/hellwig
 
 
 Thank you!
-
-
-.. |CODESHIP_ID| b5730f70-2400-0134-e4a5-76d3d72b136a
-.. |PROJECT_NAME| django-envar
-.. |REPO| hellwig/|PROJECT_NAME|
