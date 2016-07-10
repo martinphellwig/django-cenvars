@@ -123,4 +123,4 @@ STATIC_URL = '/static/'
 # Import applications
 # pylint:disable=wrong-import-position
 import django_integrator
-django_integrator.add_application('django_envar')
+django_integrator.add_application('django_cenvars')

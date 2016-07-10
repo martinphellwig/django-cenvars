@@ -3,7 +3,7 @@
 Developer Reset.
 """
 import os
-APP = 'django_envar'
+APP = 'django_cenvars'
 DIR = os.path.dirname(os.path.abspath(__file__))
 
 

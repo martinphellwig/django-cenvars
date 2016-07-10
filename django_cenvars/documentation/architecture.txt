@@ -1,0 +1,13 @@
+TODO:
+
+Use an in-memory database only, on application start up load the data from the
+standard file backed database (this data is encrypted) and load it into the 
+in-memory one, every time a change is made to the in-memory database. write an
+transaction log to the file-backed database. Upon restart, all the data is 
+imported, the transactions are applied and the previous data is replaced with
+a new copy.
+
+The above data is encrypted with the systems 
+
+
+Upon creating a client, it will set default values and generate an RSA key.
