@@ -24,6 +24,8 @@ CLASSIFIERS = [
 REQUIREMENTS = [
     'Django',
     'django-integrator',
+    'pyaes',
+    'rsa',
     ]
 
 LICENSE = 'BSD'
