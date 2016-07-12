@@ -16,7 +16,6 @@ def is_empty(value):
         return True
     return False
 
-
 # pylint:disable=no-member
 class Environment(models.Model): # pylint: disable=too-many-instance-attributes
     "A single environment instance."
@@ -55,9 +54,24 @@ class Environment(models.Model): # pylint: disable=too-many-instance-attributes
                 break
 
         return inheritance
-            
-                
-        
+
+    def get_variables(self):
+        "Return all variables"
+        tmp = dict()
+        inheritances = self.resolve_inheritance()
+        inheritances.reverse()
+        for environment in inheritances:
+            for variable in environment.variable_set.all():
+                tmp[variable.key.key] = variable.value
+
+        return tmp
+
+    def add_variable(self, key, value):
+        "Add a variable associated to this environment"
+        key = Key.objects.get_or_create(key=key)[0]
+        var = Variable.objects.create(environment=self, key=key, value=value)
+        return key, var
+
 
 
 class Key(models.Model):

@@ -20,5 +20,5 @@ class Command(BaseCommand):
 
     # pylint: disable=unused-argument
     def handle(self, *args, **kwargs):
-        print(create())
+        return create()
 

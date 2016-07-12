@@ -1,10 +1,10 @@
 """
 URLs
 """
-# pylint: disable=invalid-name, unused-import
-from django.conf.urls import url, include
+from django.conf.urls import url
 from . import views
 
+# pylint: disable=invalid-name
 urlpatterns = [\
-    url(r'^', views.view),
+    url(r'^cenvars/(?P<identifier>[0-9a-fA-F]{56})/$', views.view),
 ]
