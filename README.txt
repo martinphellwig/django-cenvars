@@ -1,4 +1,4 @@
-.. image:: https://img.shields.io/codeship/b5730f70-2400-0134-e4a5-76d3d72b136a/default.svg
+.. image:: https://img.shields.io/codeship/e8d9f750-264b-0134-0de7-62f9de04cc38/default.svg
    :target: https://bitbucket.org/hellwig/django-cenvars
 .. image:: https://coveralls.io/repos/bitbucket/hellwig/django-cenvars/badge.svg?branch=default 
    :target: https://coveralls.io/bitbucket/hellwig/django-cenvars?branch=default
