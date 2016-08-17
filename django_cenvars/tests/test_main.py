@@ -3,10 +3,10 @@ Then main unit tests.
 """
 import os
 from io import StringIO
+
 if __name__ == '__main__':
     import django
     django.setup()
-
 from django.conf import settings
 from django.test import TestCase
 from django.core.management import call_command
@@ -110,9 +110,6 @@ class TestMain(TestCase):
         stdout = StringIO()
         call_command('cenvars_newkey', stdout=stdout)
         self.assertTrue(len(stdout.getvalue()) > 0)
-
-
-
 
 
 

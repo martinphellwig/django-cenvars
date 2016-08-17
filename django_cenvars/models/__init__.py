@@ -16,7 +16,7 @@ def is_empty(value):
         return True
     return False
 
-# pylint:disable=no-member
+
 class Environment(models.Model): # pylint: disable=too-many-instance-attributes
     "A single environment instance."
     label = models.CharField(max_length=64, default='', blank=True)
