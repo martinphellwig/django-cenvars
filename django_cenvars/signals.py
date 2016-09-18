@@ -6,7 +6,10 @@ from django_memdb.signals import store_load, store_save
 from . import __info__
 from .tools import codec
 
-KEY = codec.decode_key(settings.CENVARS_KEY)[1]
+if settings.CENVARS_KEY is None: # pragma: no cover
+    KEY = None
+else:
+    KEY = codec.decode_key(settings.CENVARS_KEY)[1]
 
 def persistent_crypt(**kwargs):
     "Persistent data for memdb is stored encrypted."
