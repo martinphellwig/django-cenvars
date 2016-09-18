@@ -3,16 +3,6 @@ Then main unit tests.
 """
 from io import StringIO
 import os
-KEY = (
-    "eNodkUtOBDEQQ6+Ceo00rnJ95zYIkFggPmJYIe6Om94kSrrsZ+fn+D6ud8fL7fbxdb1cXt8fH1"
-    "5f3r9u1wFw3N8dT7qOmUBbcxNg2XabJW243oTn0tPTdoOssbCgW0zXuG/DUgcJM/Ns0JiVRawn"
-    "psiJcuOGdKY02zbR7RUp42UlIbnBWG4Aq892Ypfi+xSf1ZY7p3eze3tBWFl5nF6CssDCoV0mOL"
-    "VK4LsFdpXsNMzqMOm9SW+UseUkgda6VpXK6xGLxuaoCZcKNZiqRn+PKwMSXTvpzFiDa68WULql"
-    "mJRNY5mlWsaqhbZ+OpERc/YEbsUSITQtZ3lUBJaPb1qdgZ8FWJls7T/Ox1lXeqgkN189kUlBf0"
-    "NFUPzKHzg9R0Elaxjyv23B6jwk3eJt8bbsgr9/EpRwdQ==")
-os.environ['CENVARS_KEY'] = KEY
-
-# pylint:disable=wrong-import-position
 if __name__ == '__main__':
     import django
     django.setup()
@@ -135,7 +125,6 @@ class TestMain(TestCase):
 
         from django_memdb.models import PersistentStorage
         query = list(PersistentStorage.objects.all())
-        print(query[0].data)
         environments.delete()
         self.assertFalse(Environment.objects.all().exists())
 
@@ -148,4 +137,3 @@ class TestMain(TestCase):
 
 if __name__ == '__main__':
     call_command('test')
-
