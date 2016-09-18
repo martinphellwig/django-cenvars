@@ -3,9 +3,6 @@ Then main unit tests.
 """
 from io import StringIO
 import os
-if __name__ == '__main__':
-    import django
-    django.setup()
 from django.conf import settings
 from django.test import TestCase
 from django.core.management import call_command
@@ -133,7 +130,3 @@ class TestMain(TestCase):
         restore(query)
 
         self.assertTrue(Environment.objects.all().exists())
-
-
-if __name__ == '__main__':
-    call_command('test')
