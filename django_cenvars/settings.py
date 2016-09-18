@@ -17,3 +17,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'file::memory:?cache=shared'}
 }
+
+# pylint:disable=wrong-import-position
+import django_integrator
+django_integrator.add_application('django_memdb')

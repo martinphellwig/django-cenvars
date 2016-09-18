@@ -123,7 +123,6 @@ STATIC_URL = '/static/'
 # Import applications
 # pylint:disable=wrong-import-position
 import django_integrator
-django_integrator.add_application('django_memdb')
 os.environ['CENVARS_KEY'] = (
     "eNodkUtOBDEQQ6+Ceo00rnJ95zYIkFggPmJYIe6Om94kSrrsZ+fn+D6ud8fL7fbxdb1cXt8fH1"
     "5f3r9u1wFw3N8dT7qOmUBbcxNg2XabJW243oTn0tPTdoOssbCgW0zXuG/DUgcJM/Ns0JiVRawn"
