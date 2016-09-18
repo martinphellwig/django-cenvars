@@ -2,18 +2,14 @@
 PyPi Setup file.
 """
 # pylint: disable=no-name-in-module, import-error
-import sys
-import os
 from setuptools import setup, find_packages
-sys.path.insert(0, os.path.dirname(__file__))
-from django_cenvars import __info__
 
 AUTHOR = 'Martin P. Hellwig'
 AUTHOR_EMAIL = 'martin.hellwig@gmail.com'
 
-NAME = __info__.LABELS['package_name']
-DESCRIPTION = __info__.LABELS['verbose_name']
-VERSION = '.'.join(str(number) for number in __info__.VERSION)
+NAME = 'django-cenvars'
+DESCRIPTION = 'Django Centralised Environment Variables Service'
+VERSION = '0.0.0.3'
 
 URL_MAIN = "https://bitbucket.org/hellwig/" + NAME + '/'
 URL_DOWNLOAD = URL_MAIN + 'download/' + VERSION + '.zip'
