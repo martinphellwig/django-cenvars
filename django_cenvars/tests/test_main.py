@@ -1,9 +1,18 @@
 """
 Then main unit tests.
 """
-import os
 from io import StringIO
+import os
+KEY = (
+    "eNodkUtOBDEQQ6+Ceo00rnJ95zYIkFggPmJYIe6Om94kSrrsZ+fn+D6ud8fL7fbxdb1cXt8fH1"
+    "5f3r9u1wFw3N8dT7qOmUBbcxNg2XabJW243oTn0tPTdoOssbCgW0zXuG/DUgcJM/Ns0JiVRawn"
+    "psiJcuOGdKY02zbR7RUp42UlIbnBWG4Aq892Ypfi+xSf1ZY7p3eze3tBWFl5nF6CssDCoV0mOL"
+    "VK4LsFdpXsNMzqMOm9SW+UseUkgda6VpXK6xGLxuaoCZcKNZiqRn+PKwMSXTvpzFiDa68WULql"
+    "mJRNY5mlWsaqhbZ+OpERc/YEbsUSITQtZ3lUBJaPb1qdgZ8FWJls7T/Ox1lXeqgkN189kUlBf0"
+    "NFUPzKHzg9R0Elaxjyv23B6jwk3eJt8bbsgr9/EpRwdQ==")
+os.environ['CENVARS_KEY'] = KEY
 
+# pylint:disable=wrong-import-position
 if __name__ == '__main__':
     import django
     django.setup()
@@ -12,11 +21,9 @@ from django.test import TestCase
 from django.core.management import call_command
 
 from django_cenvars import models
-from django_cenvars.management.commands import cenvars_newkey
 from django_cenvars.tools import codec
 
 settings.RSA_KEYSIZE = 512 # For testing purposes, make it a bit faster.
-settings.SERVER_KEY = cenvars_newkey.create()
 
 # pylint: disable=no-member
 class TestMain(TestCase):
@@ -111,6 +118,32 @@ class TestMain(TestCase):
         call_command('cenvars_newkey', stdout=stdout)
         self.assertTrue(len(stdout.getvalue()) > 0)
 
+    def test_007_codec(self):
+        "test the codecs"
+        rsa_key = codec.decode_key(settings.CENVARS_KEY)[1]
+        data = 'test'
+        cypher = codec.encrypt(rsa_key, data)
+        plain = codec.decrypt(rsa_key, cypher)
+        self.assertEqual(data, plain)
+
+    def test_008_save_load(self):
+        "test if the data is persistent saved and restored"
+        self._create_environments()
+        from ..models import Environment
+        environments = Environment.objects.all()
+        self.assertTrue(environments.exists())
+
+        from django_memdb.models import PersistentStorage
+        query = list(PersistentStorage.objects.all())
+        print(query[0].data)
+        environments.delete()
+        self.assertFalse(Environment.objects.all().exists())
+
+        settings.MEMDB_RESTORED = False
+        from django_memdb.tools.restore import restore
+        restore(query)
+
+        self.assertTrue(Environment.objects.all().exists())
 
 
 if __name__ == '__main__':

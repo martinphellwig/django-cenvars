@@ -6,7 +6,7 @@ import os
 URLCONF = 'urls'
 DEFAULT_SERVER = 'https://localhost:8000'
 RSA_KEYSIZE = 2048
-CENVARS_SOURCE_KEY = os.environ.get('CENVARS_SOURCE_KEY', None)
+CENVARS_KEY = os.environ.get('CENVARS_KEY', None)
 
 CENVARS_DATABASE = 'cenvars'
 
@@ -15,5 +15,3 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'file::memory:?cache=shared'}
 }
-
-DATABASE_ROUTERS = ['django_cenvars.dbrouter.Cenvars']

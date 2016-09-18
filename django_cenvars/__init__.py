@@ -5,6 +5,8 @@ import os
 from django.apps import AppConfig as _APPCFG
 from . import __info__
 
+VERSION = __info__.VERSION
+
 _ = os.path.abspath(__file__)
 _ = os.path.dirname(_)
 _ = os.path.split(_)[1]

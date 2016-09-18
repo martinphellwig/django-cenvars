@@ -8,6 +8,7 @@ import base64
 import rsa
 from django.db import models
 from django.conf import settings
+from django_memdb.mixins import PeristentInMemoryDB
 from ..tools import codec
 
 def is_empty(value):
@@ -17,7 +18,7 @@ def is_empty(value):
     return False
 
 # pylint: disable=too-many-instance-attributes, no-member
-class Environment(models.Model):
+class Environment(models.Model, PeristentInMemoryDB):
     "A single environment instance."
     label = models.CharField(max_length=64, default='', blank=True)
     store = models.URLField(blank=True)
@@ -74,7 +75,7 @@ class Environment(models.Model):
 
 
 
-class Key(models.Model):
+class Key(models.Model, PeristentInMemoryDB):
     "Key, well it is a key."
     key = models.CharField(max_length=128, unique=True)
 
@@ -82,7 +83,7 @@ class Key(models.Model):
         return self.key
 
 
-class Variable(models.Model):
+class Variable(models.Model, PeristentInMemoryDB):
     "The variable."
     environment = models.ForeignKey(Environment)
     key = models.ForeignKey(Key)
@@ -93,7 +94,7 @@ class Variable(models.Model):
         return  _
 
 
-class Inheritance(models.Model):
+class Inheritance(models.Model, PeristentInMemoryDB):
     "Inheritance of Environments."
     # No multiple inheritance, offspring can only have one parent (ascendant).
     offspring = models.OneToOneField(Environment, related_name='offspring')

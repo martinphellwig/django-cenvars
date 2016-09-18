@@ -3,14 +3,18 @@ PyPi Setup file.
 """
 # pylint: disable=no-name-in-module, import-error
 from setuptools import setup, find_packages
+from django_cenvars import __info__
 
-NAME = 'django-envar'
-DESCRIPTION = 'Django Centralised Environment Variables Server'
-VERSION = '0.0.0'
 AUTHOR = 'Martin P. Hellwig'
 AUTHOR_EMAIL = 'martin.hellwig@gmail.com'
-URL_MAIN = "https://repository.example.com/" + NAME + '/'
+
+NAME = __info__.LABELS['package_name']
+DESCRIPTION = __info__.LABELS['verbose_name']
+VERSION = '.'.join(str(number) for number in __info__.VERSION)
+
+URL_MAIN = "https://bitbucket.org/hellwig/" + NAME + '/'
 URL_DOWNLOAD = URL_MAIN + 'download/' + VERSION + '.zip'
+
 
 KEYWORDS = [
     'django',
@@ -26,6 +30,7 @@ REQUIREMENTS = [
     'django-integrator',
     'pyaes',
     'rsa',
+    'django-memdb',
     ]
 
 LICENSE = 'BSD'
