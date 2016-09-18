@@ -2,7 +2,10 @@
 PyPi Setup file.
 """
 # pylint: disable=no-name-in-module, import-error
+import sys
+import os
 from setuptools import setup, find_packages
+sys.path.insert(0, os.path.dirname(__file__))
 from django_cenvars import __info__
 
 AUTHOR = 'Martin P. Hellwig'
