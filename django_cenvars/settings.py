@@ -5,7 +5,7 @@ This projects settings.
 import os
 
 URLCONF = 'urls'
-DEFAULT_SERVER = 'https://localhost:8000'
+DEFAULT_SERVER = os.environ.get('CENVARS_URL', 'https://localhost:8000')
 RSA_KEYSIZE = 2048
 
 CENVARS_KEY = os.environ.get('CENVARS_KEY')
