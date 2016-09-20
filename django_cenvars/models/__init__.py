@@ -39,27 +39,25 @@ class Environment(models.Model, PeristentInMemoryDB):
 
         return models.Model.save(self, *args, **kwargs)
 
-    def resolve_inheritance(self):
+    def resolve_ancestors(self):
         "Resolve inheritance, break if there is a recursion."
-        # First get a line of inheritance
-        inheritance = list()
-        workon = self
-        while True:
-            inheritance.append(workon)
+        # Get a chronological line of inheritance, preventing infinite loops.
+        inheritances = []
+        work_queue = [self,]
+        while len(work_queue) > 0:
+            environment = work_queue.pop(0)
+            if environment not in inheritances:
+                inheritances.append(environment)
+            for inheritance in environment.offspring.all():
+                if inheritance.ascendant not in inheritances+work_queue:
+                    work_queue.append(inheritance.ascendant)
 
-            if not hasattr(workon, 'offspring'):
-                break
-
-            workon = workon.offspring.ascendant
-            if workon in inheritance:
-                break
-
-        return inheritance
+        return inheritances
 
     def get_variables(self):
         "Return all variables"
         tmp = dict()
-        inheritances = self.resolve_inheritance()
+        inheritances = self.resolve_ancestors()
         inheritances.reverse()
         for environment in inheritances:
             for variable in environment.variable_set.all():
@@ -96,9 +94,11 @@ class Variable(models.Model, PeristentInMemoryDB):
 
 class Inheritance(models.Model, PeristentInMemoryDB):
     "Inheritance of Environments."
-    # No multiple inheritance, offspring can only have one parent (ascendant).
-    offspring = models.OneToOneField(Environment, related_name='offspring')
+    offspring = models.ForeignKey(Environment, related_name='offspring')
     ascendant = models.ForeignKey(Environment, related_name='ascendant')
+
+    class Meta: # pylint:disable=too-few-public-methods, missing-docstring
+        unique_together = (('offspring', 'ascendant'))
 
     def __str__(self):
         return self.offspring.label + '<' + self.ascendant.label

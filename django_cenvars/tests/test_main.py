@@ -53,35 +53,47 @@ class TestMain(TestCase):
         decrypted = codec.decrypt(rsa_key, encrypted)
         self.assertEqual(data, decrypted)
 
-    def test_002_inheritance(self):
+    def test_002_ancestors(self):
+        "Test the inherited"
+        env_a = models.Environment.objects.create(label='a')
+        env_b = models.Environment.objects.create(label='b')
+        env_c = models.Environment.objects.create(label='c')
+        models.Inheritance.objects.create(offspring=env_c, ascendant=env_b)
+        models.Inheritance.objects.create(offspring=env_b, ascendant=env_a)
+        # C is a child of B which is a child of A, so when we resolve the
+        # ancestors of C we expect it to return C, B, A
+        self.assertEqual([env.label for env in (env_c, env_b, env_a)],
+                         [env.label for env in env_c.resolve_ancestors()])
+
+    def test_003_inheritance(self):
         "Test the inheritance"
         gen1, gen2, gen3, gen4 = self._create_environments()
         self._create_inheritance(gen1, gen2, gen3, gen4)
-
+ 
         expected = [gen4, gen3, gen2, gen1]
         expected = [str(item) for item in expected]
-        returned = gen4.resolve_inheritance()
+        returned = gen4.resolve_ancestors()
         returned = [str(item) for item in returned]
         self.assertEqual(expected, returned)
-
+ 
         # Add a recursion in it
         models.Inheritance.objects.create(offspring=gen1, ascendant=gen4)
-        returned = gen4.resolve_inheritance()
+        returned = gen4.resolve_ancestors()
         returned = [str(item) for item in returned]
         self.assertEqual(expected, returned)
-
-    def test_003_variables(self):
+ 
+    def test_004_variables(self):
         "Test retrieving variables"
         gen1, gen2, gen3, gen4  = self._create_environments()
         self._create_inheritance(gen1, gen2, gen3, gen4)
         self._create_variabels(gen1, gen2, gen3, gen4)
         gen1.add_variable('gen1_override', 'first')
         gen4.add_variable('gen1_override', 'override')
-
+ 
         self.assertEqual(gen4.get_variables()['gen1_override'], 'override')
         self.assertEqual(gen3.get_variables()['gen1_override'], 'first')
 
-    def test_004_fetch_via_request(self):
+    def test_005_fetch_via_request(self):
         "Implement the fetching of the data via the get request."
         gen1, gen2, gen3, gen4  = self._create_environments()
         self._create_inheritance(gen1, gen2, gen3, gen4)
@@ -91,7 +103,7 @@ class TestMain(TestCase):
         data = codec.decrypt(rsa_key, encrypted)
         self.assertEqual(gen4.get_variables(), data)
 
-    def test_005_models_save(self):
+    def test_006_models_save(self):
         "test if we can set the label without regenerating a key."
         gen1 = self._create_environments()[0]
         old = gen1.ident[::]
@@ -99,13 +111,13 @@ class TestMain(TestCase):
         gen1.save()
         self.assertEqual(gen1.ident, old)
 
-    def test_006_command(self):
+    def test_007_command(self):
         "test if the command has output."
         stdout = StringIO()
         call_command('cenvars_newkey', stdout=stdout)
         self.assertTrue(len(stdout.getvalue()) > 0)
 
-    def test_007_codec(self):
+    def test_008_codec(self):
         "test the codecs"
         rsa_key = codec.decode_key(settings.CENVARS_KEY)[1]
         data = 'test'
@@ -113,7 +125,7 @@ class TestMain(TestCase):
         plain = codec.decrypt(rsa_key, cypher)
         self.assertEqual(data, plain)
 
-    def test_008_save_load(self):
+    def test_009_save_load(self):
         "test if the data is persistent saved and restored"
         self._create_environments()
         from ..models import Environment
