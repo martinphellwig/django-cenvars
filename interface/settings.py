@@ -124,11 +124,11 @@ STATIC_URL = '/static/'
 # pylint:disable=wrong-import-position
 import django_integrator
 os.environ['CENVARS_KEY'] = (
-    "eNodkUtOBDEQQ6+Ceo00rnJ95zYIkFggPmJYIe6Om94kSrrsZ+fn+D6ud8fL7fbxdb1cXt8fH1"
-    "5f3r9u1wFw3N8dT7qOmUBbcxNg2XabJW243oTn0tPTdoOssbCgW0zXuG/DUgcJM/Ns0JiVRawn"
-    "psiJcuOGdKY02zbR7RUp42UlIbnBWG4Aq892Ypfi+xSf1ZY7p3eze3tBWFl5nF6CssDCoV0mOL"
-    "VK4LsFdpXsNMzqMOm9SW+UseUkgda6VpXK6xGLxuaoCZcKNZiqRn+PKwMSXTvpzFiDa68WULql"
-    "mJRNY5mlWsaqhbZ+OpERc/YEbsUSITQtZ3lUBJaPb1qdgZ8FWJls7T/Ox1lXeqgkN189kUlBf0"
-    "NFUPzKHzg9R0Elaxjyv23B6jwk3eJt8bbsgr9/EpRwdQ==")
-django_integrator.add_application('django_cenvars')
+    "eNodUUtOHFEQuwrqdaRxuf5zG0SQWCAgmYFNxN1xZ9F69brddtn+dzwf14fK9P71cHycc5nH+r"
+    "pnbtInGlUzAzh9aTEjPCM30G3NdQ5qOpETzACwZVG6oT1P4j8iNlYbN7aBHgcyypOtk6Un2Fkx"
+    "+j9KkrTEYJLZ2k5vK8urmiffTXxp1PSmaXxg6QyLTSnPounaDBNzvvLAkgsvXW11mFQhjETR5o"
+    "Yd684YS86Gi2ARO5yWF+5yPIo9a4FRDIplpRPyINXK04mwLNfXjf8KvlrwUwseL/f7x/VyeX1"
+    "/enx9eb/dr0oTl6fnt6/Hv7fLIdhvwRTZDlxduI/Wzmk5kJ9IskKsXgyx0wwe7ViP4KYgfupK2"
+    "cNHSU/JsUH5jeKMswYkvE0KZmKQLZUHqtKuXgWA1ESVDppsrpykOgi1st8/JA91jQ==")
 
+django_integrator.add_application('django_cenvars')

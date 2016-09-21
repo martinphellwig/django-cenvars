@@ -5,11 +5,10 @@ import json
 import random
 import hashlib
 import base64
-import rsa
 from django.db import models
 from django.conf import settings
 from django_memdb.mixins import PeristentInMemoryDB
-from ..tools import codec
+from cenvars import api
 
 def is_empty(value):
     "Test if value is empty."
@@ -34,8 +33,10 @@ class Environment(models.Model, PeristentInMemoryDB):
             self.store = settings.DEFAULT_SERVER
 
         if is_empty(self.envar):
-            _, key = rsa.newkeys(settings.RSA_KEYSIZE)
-            self.ident, self.envar = codec.encode_key(key, self.store)
+            encoded_key = api.create_key(url=settings.DEFAULT_SERVER,
+                                         key_size=settings.RSA_KEYSIZE)
+            self.ident = api.decode_key(encoded_key)[2]
+            self.envar = encoded_key
 
         return models.Model.save(self, *args, **kwargs)
 

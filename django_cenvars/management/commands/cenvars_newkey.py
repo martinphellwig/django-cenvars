@@ -1,18 +1,14 @@
 """
 Command update languages.
 """
-import rsa
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from ...tools import codec
+from cenvars import api
 
 def create():
     "create key"
-    _,key = rsa.newkeys(settings.RSA_KEYSIZE)
-    # need to split this out in a encode/decode key
-    _, tmp = codec.encode_key(key, url=settings.DEFAULT_SERVER)
-    return tmp
-
+    return api.create_key(url=settings.DEFAULT_SERVER,
+                          key_size=settings.RSA_KEYSIZE)
 
 class Command(BaseCommand):
     """Create a new server key pair."""
@@ -21,4 +17,3 @@ class Command(BaseCommand):
     # pylint: disable=unused-argument
     def handle(self, *args, **kwargs):
         return create()
-

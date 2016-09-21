@@ -8,7 +8,7 @@ from django.test import TestCase
 from django.core.management import call_command
 
 from django_cenvars import models
-from django_cenvars.tools import codec
+from cenvars import api
 
 settings.RSA_KEYSIZE = 512 # For testing purposes, make it a bit faster.
 
@@ -48,9 +48,9 @@ class TestMain(TestCase):
         environ = models.Environment.objects.create(label='test')
         self.assertTrue(environ.envar is not None)
         data = os.environ.copy()
-        _, rsa_key = codec.decode_key(environ.envar)
-        encrypted = codec.encrypt(rsa_key, data)
-        decrypted = codec.decrypt(rsa_key, encrypted)
+        _, key_size, _, rsa_key = api.decode_key(environ.envar)
+        encrypted = api.encrypt(rsa_key, data)
+        decrypted = api.decrypt(rsa_key, encrypted, key_size)
         self.assertEqual(data, decrypted)
 
     def test_002_ancestors(self):
@@ -99,8 +99,8 @@ class TestMain(TestCase):
         self._create_inheritance(gen1, gen2, gen3, gen4)
         self._create_variabels(gen1, gen2, gen3, gen4)
         encrypted = self.client.get('/cenvars/%s/' % gen4.ident).content
-        rsa_key = codec.decode_key(gen4.envar)[1]
-        data = codec.decrypt(rsa_key, encrypted)
+        _, key_size, _, rsa_key = api.decode_key(gen4.envar)
+        data = api.decrypt(rsa_key, encrypted, key_size)
         self.assertEqual(gen4.get_variables(), data)
 
     def test_006_models_save(self):
@@ -119,10 +119,10 @@ class TestMain(TestCase):
 
     def test_008_codec(self):
         "test the codecs"
-        rsa_key = codec.decode_key(settings.CENVARS_KEY)[1]
+        _, key_size, _, rsa_key = api.decode_key(settings.CENVARS_KEY)
         data = 'test'
-        cypher = codec.encrypt(rsa_key, data)
-        plain = codec.decrypt(rsa_key, cypher)
+        cypher = api.encrypt(rsa_key, data)
+        plain = api.decrypt(rsa_key, cypher, key_size)
         self.assertEqual(data, plain)
 
     def test_009_save_load(self):

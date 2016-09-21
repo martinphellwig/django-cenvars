@@ -1,4 +1,3 @@
 django
-rsa
-pyaes
+cenvars-client
 django-memdb

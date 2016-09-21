@@ -9,7 +9,7 @@ AUTHOR_EMAIL = 'martin.hellwig@gmail.com'
 
 NAME = 'django-cenvars'
 DESCRIPTION = 'Django Centralised Environment Variables Service'
-VERSION = '0.0.0.6'
+VERSION = '0.0.1.1'
 
 URL_MAIN = "https://bitbucket.org/hellwig/" + NAME + '/'
 URL_DOWNLOAD = URL_MAIN + 'download/' + VERSION + '.zip'
@@ -27,8 +27,7 @@ CLASSIFIERS = [
 REQUIREMENTS = [
     'Django',
     'django-integrator',
-    'pyaes',
-    'rsa',
+    'cenvars-client',
     'django-memdb',
     ]
 

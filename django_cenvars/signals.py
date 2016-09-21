@@ -3,13 +3,14 @@ This module is imported on app ready (see __init__).
 """
 from django.conf import settings
 from django_memdb.signals import store_load, store_save
+from cenvars import codec
 from . import __info__
-from .tools import codec
+
 
 if settings.CENVARS_KEY is None: # pragma: no cover
-    KEY = None
+    KEY = KEY_SIZE = None
 else:
-    KEY = codec.decode_key(settings.CENVARS_KEY)[1]
+    _, KEY_SIZE, _, KEY = codec.decode_key(settings.CENVARS_KEY)
 
 def persistent_crypt(**kwargs):
     "Persistent data for memdb is stored encrypted."
@@ -19,7 +20,7 @@ def persistent_crypt(**kwargs):
         if kwargs['kwargs']['process'] == 'encode':
             data = codec.encrypt(KEY, data)
         else:
-            data = codec.decrypt(KEY, data)
+            data = codec.decrypt(KEY, data, key_size=KEY_SIZE)
 
         kwargs['kwargs']['data'] = data
 
