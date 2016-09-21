@@ -95,12 +95,13 @@ class Variable(models.Model, PeristentInMemoryDB):
 
 class Inheritance(models.Model, PeristentInMemoryDB):
     "Inheritance of Environments."
+    sortorder = models.FloatField(default=0.0)
     offspring = models.ForeignKey(Environment, related_name='offspring')
     ascendant = models.ForeignKey(Environment, related_name='ascendant')
 
     class Meta: # pylint:disable=too-few-public-methods, missing-docstring
         unique_together = (('offspring', 'ascendant'))
+        ordering = ['offspring', 'sortorder']
 
     def __str__(self):
         return self.offspring.label + '<' + self.ascendant.label
-
