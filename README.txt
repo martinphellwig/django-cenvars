@@ -89,9 +89,26 @@ How do I install it?
 
 How do I use it?
 ================
+This is an Django-Integrator compliant project, thus in the settings file add:
 ::
 
-  #USAGE#
+  django_integrator.add_application('django_cenvars')
+
+You will also need to set the following environment variables:
+
+  - CENVARS_URL
+  - CENVARS_KEY
+  
+The CENVARS_URL is the url where the exernal client can connect to the server
+and get it's environment variables. 
+
+The CENVARS_KEY is the encryption key used for encrypting the data in the
+persistent database. It can be generated with the following command:
+
+::
+
+  python manage.py cenvars_newkey 
+
 
 What license is this?
 =====================
